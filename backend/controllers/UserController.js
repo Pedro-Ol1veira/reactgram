@@ -16,7 +16,7 @@ const generateToken = (id) => {
 
 const register = async (req, res) => {
     const { name, email, password } = req.body;
-    const user = await User.findOne();
+    const user = await User.findOne({email: email});
     if (user) {
         res.status(422).json({
             errors: ["Por favor, utilize outro email"]
@@ -111,9 +111,30 @@ const update = async (req, res) => {
 
     res.status(200).json(user);
 }
+
+const getUserById = async (req, res) => {
+    const {id} = req.params;
+
+    try {
+        const user = await User.findById(id).select("-password");
+        if(!user) {
+            res.status(404).json({errors: ["Usuario não encontrado"]});
+            return;
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({errors: ["Usuario não encontrado"]});
+        return;
+    }
+
+    
+}
+
 module.exports = {
     register,
     login,
     getCurrentUser,
-    update
+    update,
+    getUserById,
+
 }
