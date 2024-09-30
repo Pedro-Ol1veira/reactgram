@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { register, reset } from "../../src/slices/authSlice";
+import { register, reset } from "../../slices/authSlice";
+import Message from "../../components/Message/Message";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -30,7 +31,7 @@ const Register = () => {
   };
 
   // limpa os estados de auth
-  
+
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
@@ -64,7 +65,9 @@ const Register = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword || ""}
         />
-        <input type="submit" value="Cadastrar" />
+        {!loading && <input type="submit" value="Cadastrar" />}
+        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {error && <Message msg={error} type="error" />}
       </form>
       <p>
         Já tem conta ? <Link to="/login">Clique aqui</Link>
