@@ -10,10 +10,9 @@ import Register from "./pages/Auth/Register";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import EditProfile from "./pages/editProfile/EditProfile";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   const { auth, loading } = useAuth();
 
   if (loading) {
@@ -32,6 +31,10 @@ function App() {
             <Route
               path="/profile"
               element={auth ? <EditProfile /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/users/:id"
+              element={auth ? <Profile /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"
