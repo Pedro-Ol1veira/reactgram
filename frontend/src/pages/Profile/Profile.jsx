@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getUserDetails } from "../../slices/userSlice";
+import { publishPhoto, resetMessage } from "../../slices/photoSlice";
 
 const Profile = () => {
   const { id } = useParams();
@@ -18,13 +19,47 @@ const Profile = () => {
 
   const { user, loading } = useSelector((state) => state.user);
   const { user: userAuth } = useSelector((state) => state.auth);
+  const {
+    photos,
+    loading: loadingPhoto,
+    message: messagePhoto,
+    error: errorPhoto,
+  } = useSelector((state) => state.photo);
+
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
 
   const newPhotoForm = useRef();
   const editPhotoForm = useRef();
 
+  const handleFile = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
+    const photoData = {
+      title,
+      image,
+    };
+
+    const formData = new FormData();
+
+    const photoFormData = Object.keys(photoData).forEach((key) =>
+      formData.append(key, photoData[key])
+    );
+
+    formData.append("photo", photoFormData);
+
+    dispatch(publishPhoto(formData));
+
+    setTitle("");
+
+    setTimeout(() => {
+      dispatch(resetMessage());
+    }, 2000);
   };
 
   useEffect(() => {
@@ -52,15 +87,25 @@ const Profile = () => {
             <form onSubmit={handleSubmit}>
               <label>
                 <span>Titulo para a foto: </span>
-                <input type="text" placeholder="Insira um titulo" />
+                <input
+                  type="text"
+                  placeholder="Insira um titulo"
+                  onChange={(e) => setTitle(e.target.value)}
+                  value={title || ""}
+                />
               </label>
               <label>
                 <span>Imagem:</span>
-                <input type="file"/>
+                <input type="file" onChange={handleFile} />
               </label>
-              <input type="submit" value="Postar" />
+              {!loadingPhoto && <input type="submit" value="Postar" />}
+              {loadingPhoto && (
+                <input type="submit" disabled value="Aguarde..." />
+              )}
             </form>
           </div>
+          {errorPhoto && <Message msg={errorPhoto.message} type="error" />}
+          {messagePhoto && <Message msg={messagePhoto} type="success" />}
         </>
       )}
     </div>
