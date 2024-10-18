@@ -1,11 +1,13 @@
-import { configureStore , ReducerType } from "@reduxjs/toolkit";
+import { configureStore, ReducerType } from "@reduxjs/toolkit";
 
 import authReducer from "./slices/authSlice";
 import userReducer from "./slices/userSlice";
+import photoReducer from "./slices/photoSlice";
 
-export const store = configureStore ({
+export const store = configureStore({
   reducer: {
     auth: authReducer,
-    user: userReducer
+    user: userReducer,
+    photo: photoReducer,
   },
 });
