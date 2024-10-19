@@ -49,12 +49,32 @@ const updatePhoto = async (data, id, token) => {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
       .catch((err) => console.log(err));
-    
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-const photoService = { publishPhoto, getUserPhotos, deletePhoto, updatePhoto };
+const getPhoto = async (id, token) => {
+  const config = requestConfig("GET", null, token);
+
+  try {
+    const res = fetch(api + "/photos/" + id, config)
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const photoService = {
+  publishPhoto,
+  getUserPhotos,
+  deletePhoto,
+  updatePhoto,
+  getPhoto,
+};
 export default photoService;
