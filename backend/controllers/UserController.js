@@ -52,7 +52,6 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({email});
-    res.status(200).json({message: "Buscou no DB"})
     if(!user) {
         res.status(404).json({errors: ["Usuario não encontrado"]});
         return;
