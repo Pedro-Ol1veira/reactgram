@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 //cors
-app.use(cors({credentials: true, origin: "https://reactgram-k2jz.vercel.app"}));
+app.use(cors({origin: "https://reactgram-k2jz.vercel.app"}));
 //upload directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 // db conections
