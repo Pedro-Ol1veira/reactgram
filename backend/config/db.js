@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const mongoURI = process.env.MONGODB_URI;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASS ;
 
 const conn = async () => {
     try {
-        const dbConn = await mongoose.connect(`mongoURI`);
+        const dbConn = await mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.5a6p4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`);
 
         console.log("Conectou ao banco");
         return dbConn;
