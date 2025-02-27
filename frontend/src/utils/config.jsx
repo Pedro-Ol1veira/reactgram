@@ -1,5 +1,5 @@
-export const api = "http://localhost:5000/api";
-export const upload = "http://localhost:5000/uploads";
+export const api = "http://https://reactgram-one.vercel.app/api";
+export const upload = "http://https://reactgram-one.vercel.app/uploads";
 
 export const requestConfig = (method, data, token = null, image = null) => {
     let config;
