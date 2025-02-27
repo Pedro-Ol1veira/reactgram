@@ -1,5 +1,5 @@
-export const api = "https://reactgram-pedro-ol1veiras-projects.vercel.app/api";
-export const upload = "https://reactgram-pedro-ol1veiras-projects.vercel.app/uploads";
+export const api = "https://reactgram-one.vercel.app/api";
+export const upload = "https://reactgram-one.vercel.app/uploads";
 
 export const requestConfig = (method, data, token = null, image = null) => {
     let config;
